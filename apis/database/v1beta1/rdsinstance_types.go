@@ -157,6 +157,12 @@ type RDSInstanceParameters struct {
 	// +optional
 	AllocatedStorage *int `json:"allocatedStorage,omitempty"`
 
+	// AutogeneratePassword indicates whether the controller should generate
+	// a random password for the master user if one is not provided via
+	// MasterUserPasswordSecretRef.
+	// +optional
+	AutogeneratePassword *bool `json:"autogeneratePassword,omitempty"`
+
 	// AutoMinorVersionUpgrade indicates that minor engine upgrades are applied automatically to the DB
 	// instance during the maintenance window.
 	// Default: true

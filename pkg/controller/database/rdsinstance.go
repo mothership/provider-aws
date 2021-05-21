@@ -160,7 +160,7 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	if err != nil {
 		return managed.ExternalCreation{}, err
 	}
-	if pw == "" {
+	if pw == "" && cr.Spec.ForProvider.AutogeneratePassword != nil && *cr.Spec.ForProvider.AutogeneratePassword {
 		pw, err = password.Generate()
 		if err != nil {
 			return managed.ExternalCreation{}, err

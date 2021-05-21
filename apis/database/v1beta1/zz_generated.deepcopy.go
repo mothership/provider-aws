@@ -527,6 +527,11 @@ func (in *RDSInstanceParameters) DeepCopyInto(out *RDSInstanceParameters) {
 		*out = new(int)
 		**out = **in
 	}
+	if in.AutogeneratePassword != nil {
+		in, out := &in.AutogeneratePassword, &out.AutogeneratePassword
+		*out = new(bool)
+		**out = **in
+	}
 	if in.AutoMinorVersionUpgrade != nil {
 		in, out := &in.AutoMinorVersionUpgrade, &out.AutoMinorVersionUpgrade
 		*out = new(bool)

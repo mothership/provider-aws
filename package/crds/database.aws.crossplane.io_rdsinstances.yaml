@@ -74,6 +74,9 @@ spec:
                   autoMinorVersionUpgrade:
                     description: 'AutoMinorVersionUpgrade indicates that minor engine upgrades are applied automatically to the DB instance during the maintenance window. Default: true'
                     type: boolean
+                  autogeneratePassword:
+                    description: AutogeneratePassword indicates whether the controller should generate a random password for the master user if one is not provided via MasterUserPasswordSecretRef.
+                    type: boolean
                   availabilityZone:
                     description: 'AvailabilityZone is the EC2 Availability Zone that the DB instance is created in. For information on AWS Regions and Availability Zones, see Regions and Availability Zones (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html). Default: A random, system-chosen Availability Zone in the endpoint''s AWS Region. Example: us-east-1d Constraint: The AvailabilityZone parameter can''t be specified if the MultiAZ parameter is set to true. The specified Availability Zone must be in the same AWS Region as the current endpoint.'
                     type: string

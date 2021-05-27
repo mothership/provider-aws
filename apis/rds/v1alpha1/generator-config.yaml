@@ -9,6 +9,16 @@ ignore:
     - CreateDBClusterInput.VpcSecurityGroupIds
     - ModifyDBClusterInput.VpcSecurityGroupIds
     - DBCluster.PendingModifiedValues
+    - DescribeDBInstancesInput.DBInstanceIndentifier
+    - CreateDBInstanceInput.DBInstanceIdentifier
+    - ModifyDBInstanceInput.DBInstanceIdentifier
+    - DeleteDBInstanceInput.DBInstanceIdentifier
+    - CreateDBInstanceInput.MasterUserPassword
+    - ModifyDBInstanceInput.MasterUserPassword
+    - CreateDBInstanceInput.VpcSecurityGroupIds
+    - ModifyDBInstanceInput.VpcSecurityGroupIds
+    - CreateDBInstanceInput.DBSecurityGroups
+    - ModifyDBInstanceInput.DBSecurityGroups
     - CreateDBParameterGroupInput.DBParameterGroupName
     - DeleteDBParameterGroupInput.DBParameterGroupName
     - ModifyDBParameterGroupInput.DBParameterGroupName
@@ -22,7 +32,6 @@ ignore:
     - CustomAvailabilityZone
     - DBClusterParameterGroup
     - DBClusterSnapshot
-    - DBInstance
     - DBInstanceReadReplica
     - DBProxy
     - DBSecurityGroup

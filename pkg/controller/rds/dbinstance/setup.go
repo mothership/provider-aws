@@ -13,7 +13,6 @@ import (
 	"github.com/pkg/errors"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/util/workqueue"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -35,9 +34,7 @@ import (
 
 // error constants
 const (
-	errGetSecretFailed    = "failed to get Kubernetes secret"
-	errUpdateSecretFailed = "failed to update Kubernetes secret"
-	errSaveSecretFailed   = "failed to save generated password to Kubernetes secret"
+	errSaveSecretFailed = "failed to save generated password to Kubernetes secret"
 )
 
 // time formats
@@ -318,7 +315,7 @@ func compareTimeRanges(format string, expectedWindow *string, actualWindow *stri
 	// all windows here have a "-" in between two values in the expected format, so just split
 	leftSpans := strings.Split(*expectedWindow, "-")
 	rightSpans := strings.Split(*actualWindow, "-")
-	for i, _ := range leftSpans {
+	for i := range leftSpans {
 		left, err := time.Parse(format, leftSpans[i])
 		if err != nil {
 			return false, err
@@ -347,39 +344,18 @@ func filterList(cr *svcapitypes.DBInstance, obj *svcsdk.DescribeDBInstancesOutpu
 
 func (e *custom) savePasswordSecret(ctx context.Context, cr *svcapitypes.DBInstance, pw string) error {
 	if cr.Spec.ForProvider.MasterUserPasswordSecretRef == nil {
-		return errors.New("no MasterUserPasswordSecretRef given, unable to save password")
+		return errors.New("no MasterUserPasswordSecretRef given, unable to store password")
 	}
+	patcher := resource.NewAPIPatchingApplicator(e.kube)
 	ref := cr.Spec.ForProvider.MasterUserPasswordSecretRef
-	nn := types.NamespacedName{
-		Name:      ref.Name,
-		Namespace: ref.Namespace,
-	}
 	sc := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      nn.Name,
-			Namespace: nn.Namespace,
+			Name:      ref.Name,
+			Namespace: ref.Namespace,
+		},
+		Data: map[string][]byte{
+			ref.Key: []byte(pw),
 		},
 	}
-	err := e.kube.Get(ctx, nn, sc)
-	var create bool
-	// if there was an error not related to the output secret not existing we should exit
-	if resource.IgnoreNotFound(err) != nil {
-		return errors.Wrap(err, errGetSecretFailed)
-	}
-	// but if it didn't exist, we should create instead of update
-	if err != nil {
-		create = true
-	}
-	sc.StringData = map[string]string{
-		ref.Key: pw,
-	}
-	if create {
-		err = e.kube.Create(ctx, sc, &client.CreateOptions{})
-	} else {
-		err = e.kube.Update(ctx, sc, &client.UpdateOptions{})
-	}
-	if err != nil {
-		return errors.Wrap(err, errUpdateSecretFailed)
-	}
-	return nil
+	return patcher.Apply(ctx, sc)
 }

@@ -182,7 +182,7 @@ type CustomDBInstanceParameters struct {
 	//
 	// Constraints: Must contain from 8 to 41 characters.
 	// +optional
-	MasterUserPasswordSecretRef *xpv1.SecretKeySelector `json:"masterUserPasswordSecretRef"`
+	MasterUserPasswordSecretRef *xpv1.SecretKeySelector `json:"masterUserPasswordSecretRef,omitempty"`
 
 	// MonitoringRoleARNRef is a reference to an IAMRole used to set
 	// MonitoringRoleARN.

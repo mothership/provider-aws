@@ -19,6 +19,7 @@ ignore:
     - ModifyDBInstanceInput.VpcSecurityGroupIds
     - CreateDBInstanceInput.DBSecurityGroups
     - ModifyDBInstanceInput.DBSecurityGroups
+    - ModifyDBInstanceInput.DBSubnetGroupName # this is immutable
     - CreateDBParameterGroupInput.DBParameterGroupName
     - DeleteDBParameterGroupInput.DBParameterGroupName
     - ModifyDBParameterGroupInput.DBParameterGroupName

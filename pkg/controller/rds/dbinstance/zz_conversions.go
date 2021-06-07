@@ -848,9 +848,6 @@ func GenerateModifyDBInstanceInput(cr *svcapitypes.DBInstance) *svcsdk.ModifyDBI
 	if cr.Spec.ForProvider.DBParameterGroupName != nil {
 		res.SetDBParameterGroupName(*cr.Spec.ForProvider.DBParameterGroupName)
 	}
-	if cr.Spec.ForProvider.DBSubnetGroupName != nil {
-		res.SetDBSubnetGroupName(*cr.Spec.ForProvider.DBSubnetGroupName)
-	}
 	if cr.Spec.ForProvider.DeletionProtection != nil {
 		res.SetDeletionProtection(*cr.Spec.ForProvider.DeletionProtection)
 	}
@@ -906,18 +903,18 @@ func GenerateModifyDBInstanceInput(cr *svcapitypes.DBInstance) *svcsdk.ModifyDBI
 		res.SetPreferredMaintenanceWindow(*cr.Spec.ForProvider.PreferredMaintenanceWindow)
 	}
 	if cr.Spec.ForProvider.ProcessorFeatures != nil {
-		f32 := []*svcsdk.ProcessorFeature{}
-		for _, f32iter := range cr.Spec.ForProvider.ProcessorFeatures {
-			f32elem := &svcsdk.ProcessorFeature{}
-			if f32iter.Name != nil {
-				f32elem.SetName(*f32iter.Name)
+		f31 := []*svcsdk.ProcessorFeature{}
+		for _, f31iter := range cr.Spec.ForProvider.ProcessorFeatures {
+			f31elem := &svcsdk.ProcessorFeature{}
+			if f31iter.Name != nil {
+				f31elem.SetName(*f31iter.Name)
 			}
-			if f32iter.Value != nil {
-				f32elem.SetValue(*f32iter.Value)
+			if f31iter.Value != nil {
+				f31elem.SetValue(*f31iter.Value)
 			}
-			f32 = append(f32, f32elem)
+			f31 = append(f31, f31elem)
 		}
-		res.SetProcessorFeatures(f32)
+		res.SetProcessorFeatures(f31)
 	}
 	if cr.Spec.ForProvider.PromotionTier != nil {
 		res.SetPromotionTier(*cr.Spec.ForProvider.PromotionTier)

@@ -858,7 +858,7 @@ type DBInstanceObservation struct {
 // DBInstanceStatus defines the observed state of DBInstance.
 type DBInstanceStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          DBInstanceObservation `json:"atProvider"`
+	AtProvider          DBInstanceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -872,7 +872,7 @@ type DBInstanceStatus struct {
 type DBInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              DBInstanceSpec   `json:"spec,omitempty"`
+	Spec              DBInstanceSpec   `json:"spec"`
 	Status            DBInstanceStatus `json:"status,omitempty"`
 }
 
